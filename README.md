@@ -1,6 +1,7 @@
-Stream Lackey
+StreamWeaver
 =============
 
-Get notified when new streams begin, so you can 'like/dislike/report/kill' them. 
+Get notified when new streams begin! Fluff streamers' egos and encourage use by
+increasing viewer count and liking Stre.ams. 
 
-Hacked together in an evening, so don't be toooo critical... You should contribute!
+Hacked together in an couple hours, so don't judge too harshly... And contribute!
