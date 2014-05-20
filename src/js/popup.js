@@ -33,7 +33,3 @@ function generateThumbsMarkup(streams) {
 	}
 	return markup;
 }
-
-$(function() {
-
-});
