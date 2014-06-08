@@ -52,21 +52,23 @@
 				}
 			};
 
-			// queue push notifications for truly new streams
+			// handle new ones, notify user and send msg to popup for DOM updates
 			for (var i = 0; i < streams.length; i++) {
 				var id = streams[i].id,
 					url = streams[i].userProfilePicUrl || 'http://www.placecage.com/200/200';
 
 				if (!liveStreams[id]) {
-					liveStreams[id] = streams[i];
-					newStreams[id] = streams[i];
+					// add to current and new streams obj arrayz 
+					newStreams[id] = liveStreams[id] = streams[i];
 
+					// create new notification obj
 					var notification = new Notify('New Stream!', {
 						icon: url+'',
 						body: streams[i].username + ' started streaming!',
 						timeout: 10
 					});
 
+					// add to notifications property
 					self._notifications.push(notification);
 				}
 			};
@@ -75,9 +77,6 @@
 				var n = self._notifications.shift();
 				n.show();
 			}
-
-			self._streams = liveStreams;
-			self.init();
 
 			if (newStreams.length)
 				chrome.runtime.sendMessage({key: 'new-streams', data: newStreams});		
@@ -94,18 +93,5 @@
 
 	console.clear();
 	StreamWeaverPoller.init();
-		// StreamWeaverPoller.prototype.on = function(evt, handler) {
-		// 	(this._handlers[evt] || (this.handlers[evt] = [])).push(handler);
-		// 	return this;
-		// };
 
-		// StreamWeaverPoller.prototype.emit = function(evt, value) {
-		// 	var handlers = this.handlers[evt];
-		// 	if (!handlers) return this;
-
-		// 	for (var i = 0, len = handlers.length; i < len; i++) {
-		// 		handlers[i].call(this, value);
-		// 	}
-		// 	return this;
-		// };
 })();
