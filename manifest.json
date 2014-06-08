@@ -9,11 +9,16 @@
 	"background": {
 		"scripts": [
 			"src/js/jquery-1.10.2.min.js",
-			"src/js/background.js"
+			"src/js/notify.js",
+			"src/js/bg.js"
 		]
 	},
 	"permissions": [
+		"http://www.placecage.com/200/200",
 		"https://api.stre.am:9443/v1/stream",
 		"notifications"
+	],
+	"web_accessible_resources": [
+		"src/img/icon.png"
 	]
 }

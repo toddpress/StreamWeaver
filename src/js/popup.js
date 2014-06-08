@@ -1,3 +1,4 @@
+// @todo: more efficient dom creation
 function makeThumb(stream) {
 	id = stream.id,
 	username = stream.username,
@@ -23,7 +24,7 @@ function makeThumb(stream) {
 
 	return thumbHtml;
 }
-
+// @todo: i'm with stupid
 function generateThumbsMarkup(streams) {
 	var markup = '';
 	for(var i = 0; i < streams.length; i++)	{
