@@ -21,7 +21,6 @@
 
 		_getStreams: function() {
 			var self = this;
-
 			$.ajax({
 				url: 'src/js/mock-data/mock-streams.json',
 				context: self,
@@ -40,15 +39,23 @@
 		_handleStreamSuccess: function(streams) {
 			var self = this,
 				liveStreams = self._streams,
-				newStreams = {},
-				oldIds = [];
+				oldIds = removedIds = [],
+				addedStreams = newStreams = {};
 
-			// remove dead streams
+			// create streams obj, keyed to ids, for tracking dead
+			streams.forEach(function(stream) {
+				newStreams[stream.id] = stream;
+			});
+
+			// remove dead streams & store ids to be sent w/ updated-streams message
+			// will use store all ids in data-attributes, so when update happens w/ remove,
+			// can target by data-attr to easily remove
 			oldIds = Object.keys(liveStreams);
-
 			for (var i = 0; i < oldIds.length; i++) {
-				if (!liveStreams.hasOwnProperty(oldIds[i])) {
-					delete liveStreams[oldIds[i]];
+				if (!newStreams.hasOwnProperty(oldIds[i])) {
+					var oldId = oldIds[i];
+					removedIds.push(oldIds[i]);
+					delete liveStreams[oldId];
 				}
 			};
 
@@ -59,11 +66,11 @@
 
 				if (!liveStreams[id]) {
 					// add to current and new streams obj arrayz 
-					newStreams[id] = liveStreams[id] = streams[i];
+					addedStreams[id] = liveStreams[id] = streams[i];
 
 					// create new notification obj
 					var notification = new Notify('New Stream!', {
-						icon: url+'',
+						icon: url,
 						body: streams[i].username + ' started streaming!',
 						timeout: 10
 					});
@@ -78,8 +85,17 @@
 				n.show();
 			}
 
-			if (newStreams.length)
-				chrome.runtime.sendMessage({key: 'new-streams', data: newStreams});		
+			if (addedStreams.length || removedIds.length)
+				chrome.runtime.sendMessage({
+					key: 'updated-streams', 
+					data: { 
+						added: addedStreams, 
+						removed: removedIds
+					}
+				});
+
+			self._streams = liveStreams;
+			self.init();
 		},
 
 		_handleStreamFailure: function() {
