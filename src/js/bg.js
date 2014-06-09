@@ -1,13 +1,13 @@
 (function() {
 
 	var POLLING_INTERVAL = 5000,
-		ENDPOINT = 'https://api.stre.am:9443/v1/stream',
-		DEVT_ENDPOINT = 'src/js/mock-data/mock-streams.json';
+		ENDPOINT = 'https://api.stre.am:9443/v1/stream';
+		// @NOTE: ENDPOINT var not in use yet
 
 	var StreamWeaverPoller = {
 		_fails: 0,
 		_interval: POLLING_INTERVAL,
-		_endpoint: DEVT_ENDPOINT,
+		_endpoint: ENDPOINT,
 		_streams: {},
 		_notifications: [],
 
@@ -22,7 +22,7 @@
 		_getStreams: function() {
 			var self = this;
 			$.ajax({
-				url: 'src/js/mock-data/mock-streams.json',
+				url: 'src/js/mock-data/mock-streams.json', // real endpoint here
 				context: self,
 				dataType: 'json'
 			})
