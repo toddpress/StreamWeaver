@@ -1,7 +1,8 @@
 (function() {
 
 	var POLLING_INTERVAL = 5000,
-		ENDPOINT = 'https://api.stre.am:9443/v1/stream';
+		ENDPOINT = 'https://api.stre.am:9443/v1/stream',
+		MOCK_ENDPOINT = 'src/js/mock-data/mock-streams.json';
 		// @NOTE: ENDPOINT var not in use yet
 
 	var StreamWeaverPoller = {
@@ -22,7 +23,7 @@
 		_getStreams: function() {
 			var self = this;
 			$.ajax({
-				url: 'src/js/mock-data/mock-streams.json', // real endpoint here
+				url: MOCK_ENDPOINT,
 				context: self,
 				dataType: 'json'
 			})
@@ -54,7 +55,9 @@
 			for (var i = 0; i < oldIds.length; i++) {
 				if (!newStreams.hasOwnProperty(oldIds[i])) {
 					var oldId = oldIds[i];
+
 					removedIds.push(oldIds[i]);
+
 					delete liveStreams[oldId];
 				}
 			};
@@ -62,17 +65,18 @@
 			// handle new ones, notify user and send msg to popup for DOM updates
 			for (var i = 0; i < streams.length; i++) {
 				var id = streams[i].id,
-					url = streams[i].userProfilePicUrl || 'http://www.placecage.com/200/200';
+					url = streams[i].userProfilePicUrl ||
+						 'http://www.placecage.com/200/200';
 
 				if (!liveStreams[id]) {
-					// add to current and new streams obj arrayz 
+					// add to current and new streams obj arrayz
 					addedStreams[id] = liveStreams[id] = streams[i];
 
 					// create new notification obj
 					var notification = new Notify('New Stream!', {
 						icon: url,
 						body: streams[i].username + ' started streaming!',
-						timeout: 10
+						timeout: 60
 					});
 
 					// add to notifications property
@@ -87,9 +91,9 @@
 
 			if (addedStreams.length || removedIds.length)
 				chrome.runtime.sendMessage({
-					key: 'updated-streams', 
-					value: { 
-						added: addedStreams, 
+					key: 'updated-streams',
+					value: {
+						added: addedStreams,
 						removed: removedIds
 					}
 				});
@@ -103,17 +107,19 @@
 				this._interval += 1000;
 
 				this.init();
-			}	
-		}		
+			}
+		}
 	}
 
-	console.clear();
 	StreamWeaverPoller.init();
 
 	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		if (request.key == 'streams-requested') {
+			// @TODO: only send response if StreamWeaverPoller is fully initialized,
+			// and if any existing streams, make sure they've been plopped into
+			// StreamWeaverPoller._streams
 			StreamWeaverPoller._getStreams();
-			sendResponse({ streams: StreamWeaverPoller._streams }); // make so only sends respons once ready
+			sendResponse({ streams: StreamWeaverPoller._streams });
 		}
 	});
 
