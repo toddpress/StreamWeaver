@@ -88,7 +88,7 @@
 			if (addedStreams.length || removedIds.length)
 				chrome.runtime.sendMessage({
 					key: 'updated-streams', 
-					data: { 
+					value: { 
 						added: addedStreams, 
 						removed: removedIds
 					}
@@ -109,5 +109,12 @@
 
 	console.clear();
 	StreamWeaverPoller.init();
+
+	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+		if (request.key == 'streams-requested') {
+			StreamWeaverPoller._getStreams();
+			sendResponse({ streams: StreamWeaverPoller._streams }); // make so only sends respons once ready
+		}
+	});
 
 })();

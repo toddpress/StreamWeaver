@@ -12,13 +12,14 @@
 		"outputId": null,
 		"status": null,
 		"live": true,
-		"thumbUrl": "https://s3.amazonaws.com/stream-thumbnails/img/some-thumbnail.png",
+		"thumbUrl": "img/mock-thumb.png",
 		"userId": "52dd8eaee4b01f70ae3bdc93",
 		"username": "testuserlottastreams",
 		"polled": 1390253438593,
 		"likes": 0,
 		"dislikes": 0,
-		"aspectRatio": "4:3"
+		"aspectRatio": "4:3",
+		"userProfilePicUrl":"http://www.placecage.com/200/200"
 	},
 	{
 		"id": "testStream22",
@@ -33,13 +34,14 @@
 		"outputId": null,
 		"status": null,
 		"live": true,
-		"thumbUrl": "https://s3.amazonaws.com/stream-thumbnails/img/some-thumbnail.png",
+		"thumbUrl": "img/mock-thumb.png",
 		"userId": "52dd8eaee4b01f70ae3bdc93",
 		"username": "testuserlottastreams",
 		"polled": 1390253438593,
 		"likes": 0,
 		"dislikes": 0,
-		"aspectRatio": "4:3"
+		"aspectRatio": "4:3",
+		"userProfilePicUrl":"http://www.placecage.com/200/200"
 	},
 	{
 		"id": "testStream33",
@@ -54,13 +56,14 @@
 		"outputId": null,
 		"status": null,
 		"live": true,
-		"thumbUrl": "https://s3.amazonaws.com/stream-thumbnails/img/some-thumbnail.png",
+		"thumbUrl": "img/mock-thumb.png",
 		"userId": "52dd8eaee4b01f70ae3bdc93",
 		"username": "testuserlottastreams",
 		"polled": 1390253438593,
 		"likes": 0,
 		"dislikes": 0,
-		"aspectRatio": "4:3"		
+		"aspectRatio": "4:3",
+		"userProfilePicUrl":"http://www.placecage.com/200/200"
 	},
 	{
 		"id": "testStream44",
@@ -75,12 +78,13 @@
 		"outputId": null,
 		"status": null,
 		"live": true,
-		"thumbUrl": "https://s3.amazonaws.com/stream-thumbnails/img/some-thumbnail.png",
+		"thumbUrl": "img/mock-thumb.png",
 		"userId": "52dd8eaee4b01f70ae3bdc93",
 		"username": "testuserlottastreams",
 		"polled": 1390253438593,
 		"likes": 0,
 		"dislikes": 0,
-		"aspectRatio": "4:3"
+		"aspectRatio": "4:3",
+		"userProfilePicUrl":"http://www.placecage.com/200/200"
 	}	
 ]
