@@ -1,6 +1,6 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	var data = request.value;
-	if (request.key === 'streams-updated') {
+	if (request.key == 'updated-streams') {
 		if (data.added.length)
 			generateThumbsMarkup(data.added);
 		else if (data.removed.length)
@@ -12,7 +12,6 @@ function removeDeadStreams(ids) {
 	var sels = ids.map(function(id) {
 		return '[data-stream-id='+id+']';
 	});
-	console.log(sels.join(','));
 	$('#streams').find(sels.join(',')).remove();
 }
 

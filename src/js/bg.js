@@ -1,9 +1,12 @@
 (function() {
 
+	chrome.browserAction.getBadgeText({}, function(res) {
+		if (!res) chrome.browserAction.setBadgeText({ text: 0+'' });
+	});
+
 	var POLLING_INTERVAL = 5000,
 		ENDPOINT = 'https://api.stre.am:9443/v1/stream',
 		MOCK_ENDPOINT = 'src/js/mock-data/mock-streams.json';
-		// @NOTE: ENDPOINT var not in use yet
 
 	var StreamWeaverPoller = {
 		_fails: 0,
@@ -17,7 +20,7 @@
 			setTimeout(
 				$.proxy(self._getStreams, self),
 				self._interval
-			);		
+			);
 		},
 
 		_getStreams: function() {
@@ -39,9 +42,11 @@
 
 		_handleStreamSuccess: function(streams) {
 			var self = this,
+				streamsLength = streams.length,
 				liveStreams = self._streams,
 				oldIds = removedIds = [],
-				addedStreams = newStreams = {};
+				addedStreams = [],
+				newStreams = {};
 
 			// create streams obj, keyed to ids, for tracking dead
 			streams.forEach(function(stream) {
@@ -63,14 +68,15 @@
 			};
 
 			// handle new ones, notify user and send msg to popup for DOM updates
-			for (var i = 0; i < streams.length; i++) {
+			for (var i = 0; i < streamsLength; i++) {
 				var id = streams[i].id,
 					url = streams[i].userProfilePicUrl ||
-						 'http://www.placecage.com/200/200';
+						 'src/img/default-pic.png';
 
 				if (!liveStreams[id]) {
-					// add to current and new streams obj arrayz
-					addedStreams[id] = liveStreams[id] = streams[i];
+					// add to current streams object and new streams array
+					liveStreams[id] = streams[i];
+					addedStreams.push(streams[i]);
 
 					// create new notification obj
 					var notification = new Notify('New Stream!', {
@@ -84,12 +90,13 @@
 				}
 			};
 
+			// fire off notifications
 			while (self._notifications.length) {
 				var n = self._notifications.shift();
 				n.show();
 			}
 
-			if (addedStreams.length || removedIds.length)
+			if (addedStreams.length || removedIds.length) {
 				chrome.runtime.sendMessage({
 					key: 'updated-streams',
 					value: {
@@ -97,7 +104,11 @@
 						removed: removedIds
 					}
 				});
+				// update badge stream count
+				chrome.browserAction.setBadgeText({ text: streamsLength+'' });
+			}
 
+			// update current streams and recurse
 			self._streams = liveStreams;
 			self.init();
 		},
@@ -115,10 +126,7 @@
 
 	chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 		if (request.key == 'streams-requested') {
-			// @TODO: only send response if StreamWeaverPoller is fully initialized,
-			// and if any existing streams, make sure they've been plopped into
-			// StreamWeaverPoller._streams
-			StreamWeaverPoller._getStreams();
+			// sends current streams when popup opened
 			sendResponse({ streams: StreamWeaverPoller._streams });
 		}
 	});

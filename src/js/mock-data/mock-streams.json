@@ -41,7 +41,7 @@
 		"likes": 0,
 		"dislikes": 0,
 		"aspectRatio": "4:3",
-		"userProfilePicUrl":"http://www.placecage.com/200/200"
+		"userProfilePicUrl":""
 	},
 	{
 		"id": "testStream33",
@@ -63,7 +63,7 @@
 		"likes": 0,
 		"dislikes": 0,
 		"aspectRatio": "4:3",
-		"userProfilePicUrl":"http://www.placecage.com/200/200"
+		"userProfilePicUrl":""
 	},
 	{
 		"id": "testStream44",
