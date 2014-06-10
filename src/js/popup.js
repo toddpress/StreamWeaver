@@ -21,6 +21,9 @@ function generateThumbsMarkup(streams) {
 
 		var stream = streams[i],
 			id = stream.id,
+			pic = stream.userProfilePicUrl
+					? stream.userProfilePicUrl
+					: 'img/default-pic.png',
 			username = stream.username,
 			$container = $('<div/>', {
 				'class':'stream-thumb-container',
@@ -34,7 +37,7 @@ function generateThumbsMarkup(streams) {
 			$userPic = $('<a/>', {
 				'class':'user-pic',
 				'href':baseURL+username,
-				'style': 'background-image: url('+stream.userProfilePicUrl+');'
+				'style': 'background-image: url('+pic+');'
 			}),
 			$channelLink = $('<a/>', {
 				'class':'username',

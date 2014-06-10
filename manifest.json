@@ -18,6 +18,7 @@
 		"notifications"
 	],
 	"web_accessible_resources": [
+		"src/img/default-pic.png",
 		"src/img/icon.png"
 	]
 }
