@@ -1,7 +1,10 @@
 (function() {
 
 	chrome.browserAction.getBadgeText({}, function(res) {
-		if (!res) chrome.browserAction.setBadgeText({ text: 0+'' });
+		if (!res){
+			chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 230] });
+			chrome.browserAction.setBadgeText({ text: 0+'' })
+		};
 	});
 
 	var POLLING_INTERVAL = 5000,

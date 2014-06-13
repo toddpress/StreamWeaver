@@ -9,14 +9,20 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 function removeDeadStreams(ids) {
-	var sels = ids.map(function(id) {
-		return '[data-stream-id='+id+']';
-	});
-	$('#streams').find(sels.join(',')).remove();
-};
+	var $streams = $('#streams'),
+		sels = ids.map(function(id) {
+			return '[data-stream-id='+id+']';
+		});
+
+	$streams.find(sels.join(',')).remove();
+
+	if (!$streams.children().length)
+		$('body').addClass('no-streams');
+}
 
 function generateThumbsMarkup(streams) {
 	var baseURL = 'http://stre.am/';
+	$('body').removeClass('no-streams');
 
 	for (var i = 0; i < streams.length; i++) {
 
@@ -55,6 +61,7 @@ function generateThumbsMarkup(streams) {
 				'html': $info
 			}),
 			$streamHtml = $container.append($thumbnail.add($userInfo));
+
 		$streamHtml.prependTo('#streams');
 	};
 };
@@ -62,6 +69,10 @@ function generateThumbsMarkup(streams) {
 $(function() {
 	chrome.runtime.sendMessage({ key: 'streams-requested'}, function(response) {
 		var ids = Object.keys(response.streams);
+		if (!ids.length) {
+			$('body').addClass('no-streams');
+			return;
+		}
 		for (var i = 0, streams = []; i < ids.length; i++) {
 			streams.push(response.streams[ids[i]]);
 		};
