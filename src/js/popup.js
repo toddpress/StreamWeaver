@@ -67,6 +67,15 @@ function generateThumbsMarkup(streams) {
 };
 
 $(function() {
+	$('#sig')
+		.on('click', function(e) {
+
+		})
+		.on('hover', function(e) {
+
+		}, function(e) {
+
+		});
 	chrome.runtime.sendMessage({ key: 'streams-requested'}, function(response) {
 		var ids = Object.keys(response.streams);
 		if (!ids.length) {
