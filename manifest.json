@@ -2,8 +2,13 @@
 	"manifest_version": 2,
 	"name": "StreamWeaver",
 	"version": "0.0.1",
+	"icons": {
+		"16":"src/img/icon16.png",
+		"48":"src/img/icon48.png",
+		"128":"src/img/icon16.png"
+	},
 	"browser_action": {
-		"default_icon": "src/img/icon.png",
+		"default_icon": "src/img/icon48.png",
 		"default_popup": "src/popup.html"
 	},
 	"background": {
@@ -16,9 +21,5 @@
 	"permissions": [
 		"https://api.stre.am:9443/v1/stream",
 		"notifications"
-	],
-	"web_accessible_resources": [
-		"src/img/default-pic.png",
-		"src/img/icon.png"
 	]
 }
