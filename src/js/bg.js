@@ -11,7 +11,6 @@
 	var StreamWeaverPoller = {
 		_fails: 0,
 		_interval: POLLING_INTERVAL,
-		_endpoint: ENDPOINT,
 		_streams: {},
 		_notifications: [],
 
@@ -26,12 +25,12 @@
 		_getStreams: function() {
 			var self = this;
 			$.ajax({
-				url: MOCK_ENDPOINT,
+				url: ENDPOINT,
 				context: self,
 				dataType: 'json'
 			})
 			.done(function(data){
-				streams = data;
+				streams = data.stream;
 				self._handleStreamSuccess(streams);
 			})
 			.fail(function(jqXHR, textStatus, error) {
@@ -98,7 +97,7 @@
 
 			if (addedStreams.length || removedIds.length) {
 				chrome.runtime.sendMessage({
-					key: 'updated-streams',
+					key: 'streams-updated',
 					value: {
 						added: addedStreams,
 						removed: removedIds

@@ -1,6 +1,6 @@
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 	var data = request.value;
-	if (request.key == 'updated-streams') {
+	if (request.key == 'streams-updated') {
 		if (data.added.length)
 			generateThumbsMarkup(data.added);
 		else if (data.removed.length)
@@ -13,10 +13,11 @@ function removeDeadStreams(ids) {
 		return '[data-stream-id='+id+']';
 	});
 	$('#streams').find(sels.join(',')).remove();
-}
+};
 
 function generateThumbsMarkup(streams) {
 	var baseURL = 'http://stre.am/';
+
 	for (var i = 0; i < streams.length; i++) {
 
 		var stream = streams[i],
@@ -25,23 +26,27 @@ function generateThumbsMarkup(streams) {
 					? stream.userProfilePicUrl
 					: 'img/default-pic.png',
 			username = stream.username,
+			url = baseURL + username,
 			$container = $('<div/>', {
 				'class':'stream-thumb-container',
 				'data-stream-id': stream.id
 			}),
 			$thumbnail = $('<a/>', {
 				'class':'stream-thumbnail',
-				'href':baseURL+username+'/'+id,
-				'style':'background-image: url('+stream.thumbUrl+');'
+				'href': url,
+				'style':'background-image: url('+stream.thumbUrl+');',
+				'target': '_blank'
 			}),
 			$userPic = $('<a/>', {
 				'class':'user-pic',
-				'href':baseURL+username,
-				'style': 'background-image: url('+pic+');'
+				'href': url,
+				'style': 'background-image: url('+pic+');',
+				'target': '_blank'
 			}),
 			$channelLink = $('<a/>', {
 				'class':'username',
-				'href':baseURL+username,
+				'href': url,
+				'target': '_blank',
 				text: username
 			}),
 			$info = $userPic.add($channelLink),
@@ -50,7 +55,6 @@ function generateThumbsMarkup(streams) {
 				'html': $info
 			}),
 			$streamHtml = $container.append($thumbnail.add($userInfo));
-
 		$streamHtml.prependTo('#streams');
 	};
 };
