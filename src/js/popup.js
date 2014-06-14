@@ -67,15 +67,19 @@ function generateThumbsMarkup(streams) {
 };
 
 $(function() {
-	$('#sig')
-		.on('click', function(e) {
+	var noStreamMsgChars = $('#no-streams .unicorn').text().split(''),
+		$noStreamsMsg = $('#no-streams .unicorn').empty(),
+		stepSize = 360/20,
+		animTime = 1.5; // match css -- @todo: grab dynamically
 
-		})
-		.on('hover', function(e) {
+	for (var i = 0, len = noStreamMsgChars.length; i < len; i++) {
+		var delay = (Math.abs((animTime * ((i * stepSize) % 360) / 360) - animTime)).toFixed(3);
+		$('<span/>', {
+			text: noStreamMsgChars[i],
+			'style': '-webkit-animation-delay: ' + delay + 's;'
+		}).appendTo($noStreamsMsg);
+	};
 
-		}, function(e) {
-
-		});
 	chrome.runtime.sendMessage({ key: 'streams-requested'}, function(response) {
 		var ids = Object.keys(response.streams);
 		if (!ids.length) {
