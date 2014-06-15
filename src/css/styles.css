@@ -19,6 +19,9 @@ light-text: #aaa
 	box-sizing: border-box;
 	cursor: default;
 }
+html, body {
+	overflow: hidden;
+}
 body {
 	color:black;
 	font-family: "Roboto", sans-serif;
@@ -58,7 +61,7 @@ body {
 .topbar .heading span {
 	font-variant: normal;
 	color: #72db6e;
-}		
+}
 h1 {
 	display: inline-block;
 	vertical-align: middle;
@@ -77,6 +80,7 @@ h2 {
 .topbar .version {
 	display: inline-block;
 	vertical-align: middle;
+	color: #aaa;
 	float: right;
 }
 .stream-thumb-container {
@@ -104,7 +108,7 @@ h2 {
 	z-index: 3;
 	margin-top: -18.5px;
 	margin-left: -9.25px;
-	transition: border-left .15s;
+	-webkit-transition: border-left .15s;
 }
 .stream-thumb-container:nth-of-type(3n+1) {
 	margin-left: 0;
@@ -171,7 +175,7 @@ h2 {
 	border-left: 32px solid transparent;
 }
 .username, .user-pic {
-	transition: opacity .15s;
+	-webkit-transition: opacity .15s;
 }
 .stream-thumb-container:hover .user-info .username,
 .stream-thumb-container:hover .user-info .user-pic {
@@ -233,6 +237,18 @@ h2 {
 	color: #45b9f9;
 	letter-spacing: 3px;
 }
+.attribution a {
+	text-decoration: none;
+	position: relative;
+	padding-left: 2px;
+	float: right;
+	color: #aaa;
+	transition: color .2s;
+}
+.attribution a:hover {
+	color: #72db6e;
+	-webkit-transition: color 0.2s;
+}
 .attribution {
 	position: absolute;
 	outline: none;
@@ -241,17 +257,32 @@ h2 {
 }
 .attribution span {
 	color: #f575b5;
+	-webkit-transition: color 0.2s;
 }
-.attribution a {
-	text-decoration: none;
-	color: #aaa;
-	transition: color .2s;
-}
-.attribution a:hover {
-	color: #72db6e;
+.attribution a:hover + span {
+	color: transparent;
 }
 .attribution cite {
 	font-style: normal;
+	z-index: 0;
+}
+.heart {
+	position: absolute;
+	width: 12px; height: 12px;
+	top: 50%; left: 50%;
+	margin-top: -6px; margin-left: -6px;
+	color: transparent;
+	opacity: 0.7;
+	z-index: -1;
+	-webkit-transition-property: top, left, opacity, color;
+	-webkit-transition-duration: 1s, 1s, 0.2s, 0.2s;
+	-webkit-transition-delay: 0s, 0s, 0.4s, 0.15s;
+	-webkit-transform: rotate(-90deg);
+}
+.heart:after {
+	content: '<3';
+	display: inline-block;
+	width: 12px; height: 12px;
 }
 @-webkit-keyframes unicorn {
     from {

@@ -77,12 +77,13 @@ $(function() {
 			heartInterval = setInterval(function() {
 				var angle = ~~(Math.random()*360),
 					t, l;
-				var dir = (Math.random() > 0.5 ? 1 : -1);
 
-				t = $this[0].style.top + ~~(Math.cos(angle) * 100) * dir;
-				l = $this[0].style.left + ~~(Math.sin(angle) * 100) * dir;
+				t = $this[0].style.top + ~~(Math.cos(angle) * 100) *
+						(Math.random() > 0.5 ? 1 : -1);
 
-				var pos = 'top: '+ t +'px; '+'left:'+l+'px; opacity: 0; color: hsl('+ (angle) +', 100%, 50%);', 
+				l = $this[0].style.left + ~~(Math.sin(angle) * 100);
+
+				var pos = 'top: '+ t +'px; '+'left:'+l+'px; opacity: 0; color: hsl('+ angle +', 100%, 50%);',
 					$heart = $('<div/>', {
 						'class': 'heart'
 					});
@@ -105,7 +106,7 @@ $(function() {
 	var noStreamMsgChars = $('#no-streams .unicorn').text().split(''),
 		$noStreamsMsg = $('#no-streams .unicorn').empty(),
 		stepSize = 360/20,
-		animationTime = 2;
+		animationTime = 1.5;
 
 	for (var i = 0, len = noStreamMsgChars.length; i < len; i++) {
 		var delay = (Math.abs((animationTime * ((i * stepSize) % 360) / 360) - animationTime)).toFixed(3);
