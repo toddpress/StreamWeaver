@@ -73,7 +73,8 @@
 			for (var i = 0; i < streamsLength; i++) {
 				var id = streams[i].id,
 					url = streams[i].userProfilePicUrl ||
-						 'src/img/default-pic.png';
+						 'src/img/default-pic.png',
+					userChannelUrl = 'http://stre.am/'+streams[i].username;
 
 				if (!liveStreams[id]) {
 					// add to current streams object and new streams array
@@ -84,7 +85,10 @@
 					var notification = new Notify('New Stream!', {
 						icon: url,
 						body: streams[i].username + ' started streaming!',
-						timeout: 60
+						timeout: 60,
+						notifyClick: function() {
+							chrome.tabs.create({ url: userChannelUrl });
+						}
 					});
 
 					// add to notifications property

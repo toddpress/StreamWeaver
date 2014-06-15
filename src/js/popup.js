@@ -67,16 +67,52 @@ function generateThumbsMarkup(streams) {
 };
 
 $(function() {
+	var	heartInterval;
+	$('cite').on({
+		'mouseenter': function() {
+			if (heartInterval) clearInterval(heartInterval);
+			var $this = $(this),
+				$mom = $this.parent();
+
+			heartInterval = setInterval(function() {
+				var angle = ~~(Math.random()*360),
+					t, l;
+				var dir = (Math.random() > 0.5 ? 1 : -1);
+
+				t = $this[0].style.top + ~~(Math.cos(angle) * 100) * dir;
+				l = $this[0].style.left + ~~(Math.sin(angle) * 100) * dir;
+
+				var pos = 'top: '+ t +'px; '+'left:'+l+'px; opacity: 0; color: hsl('+ (angle) +', 100%, 50%);', 
+					$heart = $('<div/>', {
+						'class': 'heart'
+					});
+
+				setTimeout(function() {
+					$heart.attr('style', pos);
+				});
+
+				setTimeout(function() {
+					$heart.remove();
+				}, 1500);
+
+				$heart.appendTo($mom);
+			});
+		},
+		'mouseleave': function() {
+			clearInterval(heartInterval);
+		}
+	});
 	var noStreamMsgChars = $('#no-streams .unicorn').text().split(''),
 		$noStreamsMsg = $('#no-streams .unicorn').empty(),
 		stepSize = 360/20,
-		animTime = 1.5; // match css -- @todo: grab dynamically
+		animationTime = 2;
 
 	for (var i = 0, len = noStreamMsgChars.length; i < len; i++) {
-		var delay = (Math.abs((animTime * ((i * stepSize) % 360) / 360) - animTime)).toFixed(3);
+		var delay = (Math.abs((animationTime * ((i * stepSize) % 360) / 360) - animationTime)).toFixed(3);
 		$('<span/>', {
 			text: noStreamMsgChars[i],
-			'style': '-webkit-animation-delay: ' + delay + 's;'
+			'style': '-webkit-animation-delay: ' + delay + 's; ' +
+				'-webkit-animation-duration: ' + animationTime + 's;'
 		}).appendTo($noStreamsMsg);
 	};
 
