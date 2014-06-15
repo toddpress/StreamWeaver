@@ -28,11 +28,11 @@ function generateThumbsMarkup(streams) {
 
 		var stream = streams[i],
 			id = stream.id,
+			username = stream.username,
+			url = baseURL + username,
 			pic = stream.userProfilePicUrl
 					? stream.userProfilePicUrl
 					: 'img/default-pic.png',
-			username = stream.username,
-			url = baseURL + username,
 			$container = $('<div/>', {
 				'class':'stream-thumb-container',
 				'data-stream-id': stream.id
@@ -103,6 +103,7 @@ $(function() {
 			clearInterval(heartInterval);
 		}
 	});
+
 	var noStreamMsgChars = $('#no-streams .unicorn').text().split(''),
 		$noStreamsMsg = $('#no-streams .unicorn').empty(),
 		stepSize = 360/20,

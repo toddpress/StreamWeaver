@@ -1,21 +1,20 @@
-/*
-// COLOR REF //
-
-brand-blue #45b9f9
-stream-green #72db6e
-hot-pink: #f575b5
-dark-text: #666
-light-text: #aaa
-
-*/
+/*\
+|*| -COLOR REF-
+|*|
+|*| brand-blue #45b9f9
+|*| stream-green #72db6e
+|*| hot-pink: #f575b5
+|*| dark-text: #666
+|*| light-text: #aaa
+|*|
+\*/
 
 .clearfix:after {
   content: "";
   display: table;
   clear: both;
 }
-
-*{
+* {
 	box-sizing: border-box;
 	cursor: default;
 }
