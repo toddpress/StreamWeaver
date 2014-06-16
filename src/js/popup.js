@@ -78,10 +78,8 @@ $(function() {
 				var angle = ~~(Math.random()*360),
 					t, l;
 
-				t = $this[0].style.top + ~~(Math.cos(angle) * 100) *
-						(Math.random() > 0.5 ? 1 : -1);
-
-				l = $this[0].style.left + ~~(Math.sin(angle) * 100);
+				t = $this[0].style.top + ~~(Math.sin(angle) * 100);
+				l = $this[0].style.left + ~~(Math.cos(angle) * 100);
 
 				var pos = 'top: '+ t +'px; '+'left:'+l+'px; opacity: 0; color: hsl('+ angle +', 100%, 50%);',
 					$heart = $('<div/>', {
@@ -91,7 +89,6 @@ $(function() {
 				setTimeout(function() {
 					$heart.attr('style', pos);
 				});
-
 				setTimeout(function() {
 					$heart.remove();
 				}, 1500);
