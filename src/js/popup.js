@@ -86,10 +86,6 @@ $(function() {
 						'class': 'heart'
 					});
 
-				// @NOTE: Despite looking stupid, this is necessary in this
-				// case to ensure dynamic element DOM addition occurs before
-				// I start trying to screw with it. Anyone know a better/prettier
-				// method/hack?
 				setTimeout(function() {
 					$heart.attr('style', pos);
 				});

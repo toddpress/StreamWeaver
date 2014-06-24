@@ -19,7 +19,7 @@
 	cursor: default;
 }
 html, body {
-	overflow: hidden;
+	overflow-x: hidden;
 }
 body {
 	color:black;
@@ -27,7 +27,6 @@ body {
 	font-weight: 300;
 	font-size: 12px;
 	margin: 0;
-	overflow:hidden;
 	padding: 5px 10px 20px;
 	color: #666;
 	min-width: 640px;
@@ -90,7 +89,7 @@ h2 {
 	position: relative;
 	margin-left: 10px;
 	margin-bottom: 20px;
-	overflow: hidden;
+	overflow-y: scroll;
 	background: #f2f2f2;
 	box-shadow: inset 0px 0px 0px 0.5px #fff;
 }
@@ -249,9 +248,9 @@ h2 {
 	-webkit-transition: color 0.2s;
 }
 .attribution {
-	position: absolute;
+	position: fixed;
 	outline: none;
-	right: 5px;
+	right: 10px;
 	bottom: 5px;
 }
 .attribution span {

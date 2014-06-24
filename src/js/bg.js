@@ -9,7 +9,8 @@
 
 	var POLLING_INTERVAL = 5000,
 		ENDPOINT = 'https://api.stre.am:9443/v1/stream',
-		MOCK_ENDPOINT = 'src/js/mock-data/mock-streams.json';
+		MOCK_ENDPOINT = 'src/js/mock-data/mock-streams.json',
+		NO_ENDPOINT = 'src/js/mock-data/no_streams.json';
 
 	var StreamWeaverPoller = {
 		_fails: 0,
@@ -116,15 +117,16 @@
 
 			// update current streams and recurse
 			self._streams = liveStreams;
+			self._fails = 0;
+			self._interval = POLLING_INTERVAL;
 			self.init();
 		},
 
 		_handleStreamFailure: function() {
-			if (++this._fails < 10) {
+			if (++this._fails < 10)
 				this._interval += 1000;
 
-				this.init();
-			}
+			this.init();
 		}
 	}
 
