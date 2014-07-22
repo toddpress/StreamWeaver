@@ -39,7 +39,7 @@
 			})
 			.fail(function(jqXHR, textStatus, error) {
 				console.error('Shit! ', error);
-				self._handleStreamFailure;
+				self._handleStreamFailure();
 			});
 		},
 
