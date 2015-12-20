@@ -1,7 +1,7 @@
 (function() {
 
-	chrome.browserAction.getBadgeText({}, function(res) {
-		if (!res){
+	chrome.browserAction.getBadgeText({}, function(str) {
+		if (!str){
 			chrome.browserAction.setBadgeBackgroundColor({ color: [0, 0, 0, 230] });
 			chrome.browserAction.setBadgeText({ text: 0+'' })
 		};
@@ -16,7 +16,8 @@
 		_fails: 0,
 		_interval: POLLING_INTERVAL,
 		_streams: {},
-		_notifications: [],
+		_notifications: 0, // notifications off
+                        // _notifications: [], // toggle comment to enable
 
 		init: function() {
 			var self = this;
@@ -82,14 +83,17 @@
 					liveStreams[id] = streams[i];
 					addedStreams.push(streams[i]);
 
+                                                            // limit notification queue to 4
+                                                            if (!self._notifications || self._notifications.length > 3) continue;
+
 					// create new notification obj
 					var notification = new Notify('New Stream!', {
-						icon: url,
-						body: streams[i].username + ' started streaming!',
-						timeout: 60,
-						notifyClick: function() {
-							chrome.tabs.create({ url: userChannelUrl });
-						}
+                					icon: url,
+                					body: streams[i].username + ' started streaming!',
+                					timeout: 60,
+                					notifyClick: function() {
+                						chrome.tabs.create({ url: userChannelUrl });
+                					}
 					});
 
 					// add to notifications property
@@ -104,6 +108,7 @@
 			}
 
 			if (addedStreams.length || removedIds.length) {
+
 				chrome.runtime.sendMessage({
 					key: 'streams-updated',
 					value: {

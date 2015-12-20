@@ -114,7 +114,7 @@ h2 {
 .stream-thumbnail {
 	position: absolute;
 	bottom: 0px;
-	background-size: contain;
+	background-size: cover;
 	background-position: center center;
 	position: relative;
 	display: inline-block;

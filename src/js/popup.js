@@ -67,7 +67,7 @@ function generateThumbsMarkup(streams) {
 };
 
 $(function() {
-	var	heartInterval;
+	var heartInterval;
 	$('cite').on({
 		'mouseenter': function() {
 			if (heartInterval) clearInterval(heartInterval);
@@ -75,25 +75,22 @@ $(function() {
 				$mom = $this.parent();
 
 			heartInterval = setInterval(function() {
-				var angle = ~~(Math.random()*360),
-					t, l;
+				var angle = ~~(Math.random()*360);
+                                                var t, l;
 
 				t = $this[0].style.top + ~~(Math.sin(angle) * 100);
 				l = $this[0].style.left + ~~(Math.cos(angle) * 100);
 
-				var pos = 'top: '+ t +'px; '+'left:'+l+'px; opacity: 0; color: hsl('+ angle +', 100%, 50%);',
-					$heart = $('<div/>', {
-						'class': 'heart'
-					});
+				var pos = 'top: '+ t +'px;  left:' + l + 'px; opacity: 0; color: hsl(' + angle + ', 100%, 50%);',
+            				$heart = $('<div class="heart"/>', {
+            					'class': 'heart'
+            				}).appendTo($mom);
 
 				setTimeout(function() {
-					$heart.attr('style', pos);
+                                                            $heart.attr('style', pos).end()
+                                                                        .delay(1500)
+                                                                        .remove();
 				});
-				setTimeout(function() {
-					$heart.remove();
-				}, 1500);
-
-				$heart.appendTo($mom);
 			});
 		},
 		'mouseleave': function() {
@@ -113,7 +110,7 @@ $(function() {
 			'style': '-webkit-animation-delay: ' + delay + 's; ' +
 				'-webkit-animation-duration: ' + animationTime + 's;'
 		}).appendTo($noStreamsMsg);
-	};
+	}
 
 	chrome.runtime.sendMessage({ key: 'streams-requested'}, function(response) {
 		var ids = Object.keys(response.streams);
@@ -123,7 +120,7 @@ $(function() {
 		}
 		for (var i = 0, streams = []; i < ids.length; i++) {
 			streams.push(response.streams[ids[i]]);
-		};
+		}
 		generateThumbsMarkup(streams);
 	});
 });
